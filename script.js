@@ -62,27 +62,36 @@ function checkGameOver() {
       gameGrid[position[0]] === gameGrid[position[1]] &&
       gameGrid[position[0]] === gameGrid[position[2]]
     ) {
+      // remove pointer events
       boxes.forEach((box) => {
         box.style.pointerEvents = "none";
       });
-      if (gameGrid[position[0]] === "x") result = "X";
-      else result = "Y";
+
+      if (gameGrid[position[0]] === "x") {
+        result = "X";
+      } else {
+        result = "Y";
+      }
+      // make the winning boxes background green
       boxes[position[0]].classList.add("win");
       boxes[position[1]].classList.add("win");
       boxes[position[2]].classList.add("win");
     }
   });
+
   //  We Have A Winner
   if (result !== "") {
     gameInfo.innerText = `Winner Player - ${result}`;
     newGamebtn.classList.add("active");
     return;
   }
+
   let boardFilled = true;
   gameGrid.forEach((box) => {
     if (box === "") boardFilled = false;
   });
-  // Board is filled, but game is tie
+
+  // if Board is filled then game is tie
   if (boardFilled) {
     gameInfo.innerText = "Game Tied !";
     newGamebtn.classList.add("active");
@@ -90,7 +99,7 @@ function checkGameOver() {
   }
 }
 
-// adding event listeners
+// adding event listeners for each box
 boxes.forEach((box, index) => {
   box.addEventListener("click", () => {
     handleClick(index);
